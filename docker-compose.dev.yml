@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  rmq:
+    ports:
+      - 15672:15672
+
+
+
+volumes:
+  server_test_volume_data:
+
+networks:
+  myNetwork:
+    driver: bridge

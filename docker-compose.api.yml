@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    restart: always
+    ports:
+      - ${OUTER_PORT_API}:${INNER_PORT_API}
+    networks:
+      - myNetwork
+    volumes:
+      - ./.env:/opt/app/.env

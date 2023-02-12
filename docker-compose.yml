@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./apps/app/Dockerfile
+    restart: always
+    ports:
+      - ${OUTER_PORT_APP}:${INNER_PORT_APP}
+    networks:
+      - myNetwork
+    depends_on:
+      - converter
+      - api
+
+
+  converter:
+    container_name: converter
+    build:
+      context: .
+      dockerfile: ./apps/converter/Dockerfile
+    restart: always
+    networks:
+      - myNetwork
+    volumes:
+      - ./.env:/opt/app/.env
+    depends_on:
+      - rmq
+
+  api:
+    extends:
+      file: docker-compose.api.yml
+      service: api
+    depends_on:
+      - rmq
+      - converter
+
+  rmq:
+    container_name: rmq
+    image: rabbitmq:3-management
+    restart: always
+#    profiles: ["queue"]
+    networks:
+      - myNetwork
+    env_file:
+      - ./.env.compose
+    environment:
+      - RABBITMQ_DEFAULT_USER=${AMQP_USER}
+      - RABBITMQ_DEFAULT_PASS=${AMQP_PASSWORD}
+
+
+
+volumes:
+  server_test_volume_data:
+
+networks:
+  myNetwork:
+    driver: bridge
