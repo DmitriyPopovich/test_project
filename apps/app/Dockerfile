@@ -1,4 +1,4 @@
-FROM node:lts-alpine as node
+FROM node:14-alpine as node
 WORKDIR /app/apps/app
 COPY ./apps/app/package.json ./package.json
 
