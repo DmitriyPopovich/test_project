@@ -2,7 +2,7 @@ FROM node:14-alpine as node
 WORKDIR /app/apps/app
 COPY ./apps/app/package.json ./package.json
 
-RUN npm install -g npm@6.12.1
+RUN npm install -g npm@latest
 RUN npm i libvips
 
 RUN npm install
