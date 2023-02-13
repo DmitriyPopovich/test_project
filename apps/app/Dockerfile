@@ -1,4 +1,4 @@
-FROM node:14-alpine as node_build
+FROM node:14-alpine as build
 WORKDIR /app/apps/app
 COPY ./apps/app/package.json ./package.json
 
@@ -16,7 +16,7 @@ ENV PUBLIC_URL=http://127.0.0.1:3001
 RUN npm run build
 
 FROM nginx:stable-alpine
-COPY --from=node_build /app/apps/app/build /usr/share/nginx/html
+COPY --from=build /app/apps/app/build /usr/share/nginx/html
 COPY ./apps/app/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
