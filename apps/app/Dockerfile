@@ -3,7 +3,7 @@ WORKDIR /app/apps/app
 COPY ./apps/app/package.json ./package.json
 
 #RUN npm install -g npm@6.12.1
-RUN npm i libvips
+RUN npm install libvips
 
 RUN npm install
 COPY . ../../
