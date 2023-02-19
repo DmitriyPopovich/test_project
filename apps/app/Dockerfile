@@ -12,7 +12,7 @@ WORKDIR /app
 
 WORKDIR /app/apps/app
 ARG env=prod
-ENV PUBLIC_URL=http://127.0.0.1:3001
+ENV PUBLIC_URL=http://image.local
 RUN npm run build
 
 FROM nginx:stable-alpine
